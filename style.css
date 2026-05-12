@@ -156,3 +156,38 @@ section {
     }
 
 }
+
+.room-card img {
+    width: 100%;
+    height: 250px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+}
+
+.room-card h3 {
+    margin-top: 15px;
+}
+
+.room-card p {
+    line-height: 1.5;
+}
+
+.image-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 10px;
+}
+
+.image-grid img {
+    width: 100%;
+
+    height: 120px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+}
