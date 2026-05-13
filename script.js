@@ -1,4 +1,8 @@
 const button = document.getElementById("viewRoomsBtn");
+const modal = document.getElementById("roomModal");
+const modalBody = document.getElementById("modalBody");
+const closeModal = document.getElementById("closeModal");
+const bookings = [];
 
 button.addEventListener("click", function () {
 
@@ -70,26 +74,117 @@ function displayRoomTypes() {
 });
         card.innerHTML = `
 
-            <div class="image-grid">
+    <div class="image-grid">
         ${imagesHTML}
-          </div>
+    </div>
 
-            <h3>${room.type}</h3>
+    <h3>${room.type}</h3>
 
-            <p>${room.description}</p>
+    <p>${room.description}</p>
 
-            <p><strong>Rent:</strong> ${room.price}</p>
+    <p><strong>Rent:</strong> ${room.price}</p>
 
-            <p class="available">
-                Available: ${room.available}/${room.total}
-            </p>
+    <p class="available">
+        Available: ${room.available}/${room.total}
+    </p>
 
-        `;
+    <button class="details-btn">
+        View Details
+    </button>
 
+`;
+const detailsButton = card.querySelector(".details-btn");
+
+detailsButton.addEventListener("click", function () {
+
+modal.style.display = "flex";
+
+let modalImages = "";
+
+room.images.forEach(image => {
+
+    modalImages += `
+        <img src="${image}" alt="${room.type}">
+    `;
+});
+
+modalBody.innerHTML = `
+
+    <h2>${room.type}</h2>
+
+    <div class="image-grid">
+        ${modalImages}
+    </div>
+
+    <p>${room.description}</p>
+
+    <p><strong>Rent:</strong> ${room.price}</p>
+
+    <p>
+        Available Rooms:
+        ${room.available}/${room.total}
+    </p>
+    <form class="booking-form">
+
+    <h3>Book This Room Type</h3>
+
+    <input type="text" id="fullName" placeholder="Full Name" required>
+
+    <input type="tel" id="phoneNumber" placeholder="Phone Number" required>
+
+    <input type="date" id="moveInDate" required>
+
+    <button type="submit">
+        Book Now
+    </button>
+
+</form>
+
+`;
+const bookingForm = modalBody.querySelector(".booking-form");
+
+bookingForm.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const fullName =
+    document.getElementById("fullName").value;
+
+    const phoneNumber =
+    document.getElementById("phoneNumber").value;
+
+    const moveInDate =
+    document.getElementById("moveInDate").value;
+    const booking = {
+
+    roomType: room.type,
+
+    name: fullName,
+
+    phone: phoneNumber,
+
+    moveIn: moveInDate
+
+};
+bookings.push(booking); 
+console.log(bookings);
+alert("Booking submitted successfully!");
+
+});
+
+
+});
         roomsContainer.appendChild(card);
 
     });
 
 }
 
+
 displayRoomTypes()
+closeModal.addEventListener("click", function () {
+
+    modal.style.display = "none";
+
+});
+
